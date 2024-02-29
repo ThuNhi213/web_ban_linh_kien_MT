@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "Chọn hình thức thống kê";
+    Layout = "~/Views/Layout/AdminLayout.cshtml";
+}
+<script src="~/Scripts/bootbox.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#btnSupplier').click(function () {
+            $('#modalSupplier').modal('show');
+        });
+    });
+    $(window).on('load', function () {
+        $('#modalSupplier').modal('show');
+    });
+</script>
+
+<div class="agile-grids">
+    <div class="agile-tables">
+        <div class="w3l-table-info">
+            <h2>Chức năng báo cáo thống kê</h2>
+            <input type="button" class="btn btn-success" value="Báo cáo - Thống Kê" id="btnSupplier" />
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalSupplier" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Các báo cáo thống kê</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("ImportProductBySupplierID", "ImportProductManage", FormMethod.Get))
+                {
+                    <div class="form-group">
+                        <br />
+                        <ul class="list-unstyled">
+                            <li>@Html.ActionLink("Báo cáo tồn kho", "StatisticStocking", "StatisticManage", new { }, new { @class = "btn btn-default", @style = "margin-bottom: 5px;" })</li>
+                            <li>@Html.ActionLink("Danh sách nhà cung cấp", "StatisticSupplier", "StatisticManage", new { }, new { @class = "btn btn-default", @style = "margin-bottom: 5px;" })</li>
+                            <li>@Html.ActionLink("Khách hàng tiềm năng", "StatisticCustomer", "StatisticManage", new { }, new { @class = "btn btn-default", @style = "margin-bottom: 5px;" })</li>
+                            <li>@Html.ActionLink("Sản phẩm bán chạy", "StatisticProductSold", "StatisticManage", new { from = DateTime.Now, to = DateTime.Now }, new { @class = "btn btn-default", @style = "margin-bottom: 5px;" })</li>
+                            <li>@Html.ActionLink("Đơn đặt hàng", "StatisticOrder", "StatisticManage", new { from = DateTime.Now, to = DateTime.Now }, new { @class = "btn btn-default", @style = "margin-bottom: 5px;" })</li>
+                            <li>@Html.ActionLink("Lượt truy cập", "StatisticAccessTime", "StatisticManage", new { from = DateTime.Now, to = DateTime.Now }, new { @class = "btn btn-default", @style = "margin-bottom: 5px;" })</li>
+                            <li>@Html.ActionLink("Quản lý nhập hàng", "StatisticImportCoupon", "StatisticManage", new { from = DateTime.Now, to = DateTime.Now }, new { @class = "btn btn-default", @style = "margin-bottom: 5px;" })</li>
+                            <li>@Html.ActionLink("Báo cáo tổng hợp", "StatisticReport", "StatisticManage", new { }, new { @class = "btn btn-default", @style = "margin-bottom: 5px;" })</li>
+                        </ul>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

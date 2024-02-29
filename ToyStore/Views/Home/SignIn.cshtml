@@ -1,0 +1,88 @@
+﻿@{
+    ViewBag.Title = "Đăng Nhập";
+    Layout = "~/Views/Layout/HomeLayout.cshtml";
+}
+<!--breadcrumbs-->
+<div class="breadcrumbs">
+    <div class="container">
+        <ol class="breadcrumb breadcrumb1 animated wow slideInLeft" data-wow-delay=".5s">
+            <li><a href="@Url.Action("Index","Home")"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Trang Chủ</a></li>
+            <li class="active">Đăng Nhập</li>
+        </ol>
+    </div>
+</div>
+<br />
+<!--//breadcrumbs-->
+<!--login-->
+<!--login-->
+<div class="login-page">
+    <div class="title-info wow fadeInUp animated" data-wow-delay=".5s">
+        <h3 class="title">Đăng Nhập</h3>
+    </div>
+    <div class="widget-shadow">
+        <div class="login-top wow fadeInUp animated" data-wow-delay=".7s">
+            <h4>NTechShop xin chào !<br> Không biết bạn đã tài khoản? Nếu chưa hãy<a href="/Home/SignUp">  Đăng Ký Ngay »</a> </h4>
+        </div>
+        <div class="login-body wow fadeInUp animated" data-wow-delay=".7s">
+            @using (Html.BeginForm("SignIn", "Home", FormMethod.Post))
+            {
+                <div class="form-group">
+                    <input type="text" class="user" name="Email" id="email" placeholder="Email..." required>
+                </div>
+                <div class="form-group">
+                    <div class="password-input-group">
+                        <input type="password" name="Password" class="lock" placeholder="Mật khẩu..." required>
+                        <span class="password-toggle-icon" id="passwordToggleIcon">&#128065;</span>
+                    </div>
+                </div>
+                <!-- Checkbox và Chữ quên mật khẩu -->
+                <div class="form-group row">
+                    <div class="col-sm-6 form-check">
+                        <input type="checkbox" name="RememberMe" id="rememberMe" class="form-check-input">
+                        <label for="rememberMe" class="form-check-label">Nhớ mật khẩu</label>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <a href="/Home/ForgetPasswordConfirm">Quên mật khẩu?</a>
+                    </div>
+                </div>
+
+                <span class="label label-danger" id="message">@ViewBag.Message</span>
+
+                <div class="form-group">
+                    <input type="submit" name="SignIn" value="Đăng Nhập" class="btn btn-primary">
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!--login-->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Sự kiện khi người dùng nhấn vào icon xem mật khẩu
+        $("#passwordToggleIcon").click(function () {
+            var passwordField = $("input[name='Password']");
+            var passwordFieldType = passwordField.attr("type");
+
+            // Chuyển đổi giữa password và text
+            if (passwordFieldType === "password") {
+                passwordField.attr("type", "text");
+            } else {
+                passwordField.attr("type", "password");
+            }
+        });
+    });
+</script>
+<style>
+    .password-input-group {
+        position: relative;
+    }
+
+    .password-toggle-icon {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
+</style>

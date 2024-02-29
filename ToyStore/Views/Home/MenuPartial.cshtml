@@ -1,0 +1,121 @@
+﻿@{
+    IEnumerable<SourceCode.Models.ProductCategory> productCategories = ViewBag.ListProductCategory;
+    IEnumerable<SourceCode.Models.Producer> producers = ViewBag.ListProducer;
+    IEnumerable<SourceCode.Models.Category> categories = ViewBag.ListCategory;
+    IEnumerable<SourceCode.Models.ProductCategoryParent> productCategoryParents = ViewBag.ListParent;
+    IEnumerable<SourceCode.Models.UsageType> UsageTypes = ViewBag.ListUsageType;
+}
+<div class="top-nav navbar navbar-default">
+    <!-- header-three -->
+    <div class="container">
+        <nav class="navbar" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav top-nav-info" style="font-size:15px">
+                    <li><a href="/trang-chu" class="active">Trang Chủ</a></li>
+                    <li><a href="/san-pham-moi">Sản Phẩm Mới</a></li>
+                    <li class="dropdown grid">
+                        <a href="#" class="dropdown-toggle list1" data-toggle="dropdown">Danh Mục<b class="caret"></b></a>
+                        <ul class="dropdown-menu multi-column multi-column2">
+                            <div class="row">
+                                @foreach (var item1 in productCategoryParents)
+                                {
+                                    <div class="col-sm-3 menu-grids">
+                                        <a href="/danh-muc-goc/@item1.SeoKeyword-@item1.ID">
+                                            <h4 style="font-size:13px">@item1.Name</h4>
+                                        </a>
+                                        <ul class="multi-column-dropdown">
+                                            @foreach (var item2 in productCategories.Where(x => x.ParentID == item1.ID))
+                                            {
+                                                <li>
+                                                    <a class="list" href="/danh-muc/@item2.SEOKeyword-@item2.ID" style="font-size:13px">@item2.Name</a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                }
+                                <div class="clearfix"> </div>
+                            </div>
+                        </ul>
+                    </li>
+                    <li class="dropdown grid">
+                        <a href="#" class="dropdown-toggle list1" data-toggle="dropdown">Dùng Cho<b class="caret"></b></a>
+                        <ul class="dropdown-menu multi-column multi-column2">
+                            <div class="row">
+                                <div class="col-sm-4 menu-grids">
+                                    <ul class="multi-column-dropdown">
+                                        <li><a class="list" href="/dung-cho/desktop-1" style="font-size:17px">Desktop</a></li>
+                                        <li><a class="list" href="/dung-cho/laptop-notebook-2" style="font-size:17px">Laptop/Notebook</a></li>
+                                        <li><a class="list" href="/dung-cho/tat-ca-3" style="font-size:17px">Tất cả </a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </ul>
+                    </li>
+                    <li class="dropdown grid">
+                        <a href="#" class="dropdown-toggle list1" data-toggle="dropdown">Phân Loại<b class="caret"></b></a>
+                        <ul class="dropdown-menu multi-column menu-two multi-column3">
+                            <div class="row">
+                                <div class="col-sm-4 menu-grids">
+                                    <ul class="multi-column-dropdown">
+                                        @foreach (var item in categories)
+                                        {
+                                            <li><a class="list" href="/phan-loai/@item.SEOKeyword-@item.ID" style="font-size:13px">@item.Name</a></li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </ul>
+                    </li>
+                    <li class="dropdown grid">
+                        <a href="#" class="dropdown-toggle list1" data-toggle="dropdown">Thương Hiệu <b class="caret"></b></a>
+                        <ul class="dropdown-menu multi-column multi-column2">
+                            <div class="row">
+                                <div class="col-sm-6 menu-grids">
+                                    <ul class="multi-column-dropdown">
+                                        @foreach (var item in producers.Take(producers.Count() / 2))
+                                        {
+                                            <li><a class="list" href="/thuong-hieu/@item.SEOKeyword-@item.ID" style="font-size:13px">@item.Name</a></li>
+                                        }
+                                    </ul>
+                                </div>
+                                <div class="col-sm-6 menu-grids">
+                                    <ul class="multi-column-dropdown">
+                                        @foreach (var item in producers.Skip(producers.Count() / 2))
+                                        {
+                                            <li><a class="list" href="/thuong-hieu/@item.SEOKeyword-@item.ID" style="font-size:13px">@item.Name</a></li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </ul>
+                    </li>
+
+                    <li><a href="@Url.Action("About", "Home")">Liên Hệ</a></li>
+
+                    <li class="search-bar">
+                        <input type="search" placeholder="Tìm kiếm..." name="keyword" id="search-input" required>
+                        <button onclick="submitSearch()">Tìm kiếm</button>
+                    </li>
+                </ul>
+                <div class="clearfix"> </div>
+            </div>
+        </nav>
+
+        <script>
+            function submitSearch() {
+                var keyword = document.getElementById("search-input").value;
+                // Thực hiện hành động tìm kiếm, ví dụ chuyển hướng đến trang tìm kiếm
+                window.location.href = "/Product/Search?keyword=" + encodeURIComponent(keyword);
+            }
+        </script>
+    </div>
+</div>

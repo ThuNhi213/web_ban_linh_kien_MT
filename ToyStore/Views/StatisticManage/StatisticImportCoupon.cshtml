@@ -1,0 +1,105 @@
+﻿@model IEnumerable<SourceCode.Models.ImportCoupon>
+@{
+    ViewBag.Title = "Danh Sách Phiếu Nhập";
+    Layout = "~/Views/Layout/AdminLayout.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="~/Scripts/bootbox.js"></script>
+
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="@Url.Action("Index")">Trang chủ</a> <i class="fa fa-angle-right"></i></li>
+    <li class="breadcrumb-item"><a href="@Url.Action("Index")">Chọn hình thức thống kê</a> <i class="fa fa-angle-right"></i></li>
+    <li class="breadcrumb-item"><a href="@Url.Action("List")">Thống kê phiếu nhập hàng</a> <i class="fa fa-angle-right"></i></li>
+</ol>
+<div class="agile-grids">
+    <div class="agile-tables">
+        <div class="w3l-table-info">
+            <h2>Danh sách phiếu nhập</h2>
+            <form action="~/StatisticManage/StatisticImportCoupon" method="get">
+                Từ: <input type="date" name="from" value="@ViewBag.from?.ToString(" yyyy-MM-dd")" />
+                Đến: <input type="date" name="to" value="@ViewBag.to?.ToString(" yyyy-MM-dd")" />
+                <input type="submit" value="Xem" class="btn btn-info" />
+                <button type="submit" name="viewAll" value="true" class="btn btn-secondary" style="background-color: #007bff; color: #fff;">
+                    Xem Tất Cả
+                </button>
+            </form>
+            <ul class="bt-list">
+                <li><a href="@Url.Action("DownloadExcelStatisticImportCoupon","StatisticManage",null)" class="hvr-icon-up col-24" style="background-color:green" id="btnAddNew">Xuất Excel</a></li>
+            </ul>
+            @if (Model != null)
+            {
+                if (Model.Count() > 0)
+                {
+
+                    <table id="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Mã phiếu nhập
+                                </th>
+                                <th>
+                                    Nhà cung cấp
+                                </th>
+                                <th>
+                                    Tạo bởi
+                                </th>
+                                <th>
+                                    Ngày Nhập
+                                </th>
+                                <th>
+                                    Tổng tiền
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                @Html.Hidden(item.ID.ToString())
+                                <tr>
+                                    <td style="color:brown">
+                                        <b>@Html.DisplayFor(modelItem => item.ID)</b>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Supplier.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.User.FullName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Date)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.total)
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary btnImport" href="@Url.Action("ImportProductDetail","ImportProductManage",new { ID=item.ID})">Chi Tiết</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <span>Không có dữ liệu...</span>
+                }
+            }
+            else
+            {
+                <span>Không có dữ liệu...</span>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
